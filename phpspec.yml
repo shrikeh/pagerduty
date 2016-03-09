@@ -1,0 +1,10 @@
+---
+suites:
+  default:
+    namespace:    Shrikeh\PagerDuty
+    psr4_prefix:  Shrikeh\PagerDuty
+    spec_prefix:  spec
+    spec_path:    %paths.config%
+    src_path:     %paths.config%/src
+
+...

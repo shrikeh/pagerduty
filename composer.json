@@ -1,0 +1,22 @@
+{
+  "require": {
+    "psr/http-message": "^1.0",
+    "guzzlehttp/guzzle": "^6.1"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shrikeh\\PagerDuty\\": "src"
+    }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "spec\\": "spec/"
+      }
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}
