@@ -3,7 +3,7 @@
 namespace Shrikeh\PagerDuty\Repository;
 
 use \DateTimeImmutable;
-use Shrikeh\PagerDuty\User;
+use Shrikeh\PagerDuty\UserId;
 use Shrikeh\PagerDuty\ScheduleId;
 
 interface ScheduleRepository
@@ -15,6 +15,6 @@ interface ScheduleRepository
         ScheduleId $scheduleId,
         DateTimeImmutable $start,
         DateTimeImmutable $end,
-        User $user
+        UserId $user
     );
 }

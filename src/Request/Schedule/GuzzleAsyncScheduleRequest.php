@@ -3,13 +3,13 @@
 namespace Shrikeh\PagerDuty\Request\Schedule;
 
 use DateTime;
-use DateTimeImmutable;
-use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use DateTimeInterface;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client;
-use Shrikeh\PagerDuty\UserId;
-use Shrikeh\PagerDuty\ScheduleId;
-use Shrikeh\PagerDuty\Request\ScheduleRequest;
 
+use Shrikeh\PagerDuty\Request\GuzzleRequest;
+
+use Shrikeh\PagerDuty\Request\ScheduleRequest;
 
 class GuzzleAsyncScheduleRequest implements ScheduleRequest
 {
@@ -20,28 +20,39 @@ class GuzzleAsyncScheduleRequest implements ScheduleRequest
         $this->client = $client;
     }
 
-    public function entries(
-        ScheduleId $scheduleId,
-        DateTimeImmutable $start,
-        DateTimeImmutable $end,
-        UserId $userId = null
+    public final function entries(
+        $scheduleId,
+        DateTimeInterface $start,
+        DateTimeInterface $end,
+        $userId = null
     ) {
-        $request = new GuzzleRequest(
-          'GET',
-          "schedules/$scheduleId/entries"
+        $request = $this->request(
+            GuzzleRequest::GET,
+            "schedules/$scheduleId/entries"
         );
+
         $query = [
             'since' => $start->format(DateTime::ISO8601),
             'until' => $end->format(DateTime::ISO8601),
             'overflow' => 'true'
         ];
         if ($userId) {
-            $query['user_id'] = $userId;
+            $query['user_id'] = $user->id();
         }
-        $data = $this->client->sendAsync(
+        return $this->send($request, $query);
+
+    }
+
+    private final function send(Request $request, array $query = array())
+    {
+        return $this->client->sendAsync(
             $request,
             ['query' => $query]
         );
-        return new PromiseScheduleEntryCollection($data);
+    }
+
+    private final function request($method, $url)
+    {
+      return new Request('GET', $url);
     }
 }

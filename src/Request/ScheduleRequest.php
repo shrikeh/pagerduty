@@ -2,16 +2,14 @@
 
 namespace Shrikeh\PagerDuty\Request;
 
-use DateTimeImmutable;
-use Shrikeh\PagerDuty\ScheduleId;
-use Shrikeh\PagerDuty\UserId;
+use DateTimeInterface;
 
 interface ScheduleRequest
 {
   public function entries(
-      ScheduleId $scheduleId,
-      DateTimeImmutable $start,
-      DateTimeImmutable $end,
-      UserId $userId = null
+      $scheduleId,
+      DateTimeInterface $start,
+      DateTimeInterface $end,
+      $userId
   );
 }

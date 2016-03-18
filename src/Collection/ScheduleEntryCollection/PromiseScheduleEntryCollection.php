@@ -2,76 +2,43 @@
 
 namespace Shrikeh\PagerDuty\Collection\ScheduleEntryCollection;
 
-use GuzzleHttp\Promise\PromiseInterface as Promise;
+use IteratorAggregate;
+use Shrikeh\PagerDuty\Thingy;
 use Shrikeh\PagerDuty\Collection\ScheduleEntryCollection;
 
-class PromiseScheduleEntryCollection implements ScheduleEntryCollection
+class PromiseScheduleEntryCollection implements ScheduleEntryCollection, IteratorAggregate
 {
-    private $promise;
 
-    private $data;
+    private $collection;
 
-    public function __construct(Promise $promise)
+    private $thingy;
+
+    public function __construct(Thingy $thingy)
     {
-        $this->promise = $promise;
+        $this->thingy = $thingy;
     }
 
-    public function valid()
+    public function count()
     {
-        $this->hydrate();
+        return $this->getIterator()->count();
     }
 
-    public function key()
-    {
-        $this->hydrate();
-    }
 
-    public function current()
+    public function getIterator()
     {
-        $this->hydrate();
-    }
-
-    public function rewind()
-    {
-        $this->hydrate();
-    }
-
-    public function next()
-    {
-        $this->hydrate();
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        $this->hydrate();
-    }
-
-    public function offsetGet($offset)
-    {
-        $this->hydrate();
-    }
-
-    public function offsetExists($offset)
-    {
-        $this->hydrate();
-    }
-
-    public function offsetUnset($offset)
-    {
-        $this->hydrate();
+        return $this->hydrate();
     }
 
     private function hydrate()
     {
-        if (!isset($this->data)) {
-            $data = new SplObjectStorage();
-            $this->promise->then(function ($response) use ($data) {
-                $result = json_decode($response->getBody());
-                foreach ($result->entries as $entry) {
-                  
-                }
-            });
+        if (!$this->collection) {
+            $this->collection = $this->thingy->results();
         }
+        return $this->collection;
+    }
 
+    private function collection(ScheduleEntryCollection $collection)
+    {
+        $this->collection = $collection;
     }
 }

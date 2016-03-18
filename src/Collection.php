@@ -1,10 +1,11 @@
 <?php
 namespace Shrikeh\PagerDuty;
 
-use \Iterator;
 use \ArrayAccess;
+use \Countable;
+use \Iterator;
 
-interface Collection extends Iterator, ArrayAccess
+interface Collection extends ArrayAccess, Countable, Iterator
 {
 
 }

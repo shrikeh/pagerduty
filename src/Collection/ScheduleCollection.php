@@ -4,7 +4,7 @@ namespace Shrikeh\PagerDuty\Collection;
 
 use Shrikeh\PagerDuty\Collection;
 
-interface ScheduleCollection extends Collection
+interface ScheduleCollection
 {
 
 }
