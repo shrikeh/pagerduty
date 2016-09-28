@@ -3,22 +3,29 @@
 namespace Shrikeh\PagerDuty\Repository\OnCalls;
 
 use Shrikeh\PagerDuty\Client;
+use Shrikeh\PagerDuty\Parser;
 use Shrikeh\PagerDuty\Repository\OnCalls;
-use Shrikeh\PagerDuty\Collection\EscalationPolicyCollection;
+use Shrikeh\PagerDuty\Parser\OnCall as OnCallParser;
 
 class OnCallRepository implements OnCalls
 {
     private $client;
 
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
+    private $parser;
+
+    public function __construct(
+        Client $client,
+        OnCallParser $parser
+    ) {
+        $this->client   = $client;
+        $this->parser   = $parser;
     }
 
     public function get()
     {
-        $response = $this->client->request('GET', static::ENDPOINT);
-        $response->getBody();
-        return new EscalationPolicyCollection();
+        return $this->parser->parseResponse($this->client->request(
+            'GET',
+            static::ENDPOINT
+        ));
     }
 }
