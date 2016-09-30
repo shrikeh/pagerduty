@@ -4,14 +4,12 @@ namespace Shrikeh\PagerDuty\Parser\OnCall;
 
 use Psr\Http\Message\ResponseInterface;
 
-use Shrikeh\PagerDuty\EscalationPolicy\OnCall as EscalationPolicy;
-use Shrikeh\PagerDuty\Collection\EscalationPolicyCollection;
+use Shrikeh\PagerDuty\Entity\OnCall\OnCall;
+use Shrikeh\PagerDuty\Collection\OnCalls as OnCallsCollection;
 use Shrikeh\PagerDuty\Decoder\Json;
-use Shrikeh\PagerDuty\Parser\OnCall;
+use Shrikeh\PagerDuty\Parser\OnCall as OnCallInterface;
 
-
-
-final class OnCallParser implements OnCall
+final class OnCallParser implements OnCallInterface
 {
     private $decoder;
 
@@ -26,9 +24,9 @@ final class OnCallParser implements OnCall
         $policies = [];
         foreach ($dto->oncalls as $entry) {
             foreach ($entry->escalation_policy as $scalationPolicy) {
-                $policies[] = new EscalationPolicy();
+                $policies[] = new OnCall();
             }
         }
-        return new EscalationPolicyCollection($policies);
+        return new OnCallsCollection($policies);
     }
 }

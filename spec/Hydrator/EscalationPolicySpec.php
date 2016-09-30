@@ -18,7 +18,7 @@ class EscalationPolicySpec extends ObjectBehavior
         $dto->self = 'https://api.pagerduty.com/escalation_policies/PND71Y2';
         $dto->html_url = 'https://webdemo.pagerduty.com/escalation_policies/PND71Y2';
 
-        $this->fromStdClass($dto)->shouldHaveType('Shrikeh\PagerDuty\EscalationPolicy');
+        $this->fromStdClass($dto)->shouldHaveType('Shrikeh\PagerDuty\Entity\EscalationPolicy');
     }
 
 }

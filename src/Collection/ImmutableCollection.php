@@ -7,7 +7,6 @@ use Shrikeh\PagerDuty\Collection\ImmutableArrayAccess;
 
 trait ImmutableCollection
 {
-    use OuterIterator;
     use ArrayAccess;
     use ImmutableArrayAccess
     {
