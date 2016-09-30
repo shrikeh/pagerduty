@@ -3,8 +3,9 @@
 namespace Shrikeh\PagerDuty\Client;
 
 use GuzzleHttp\ClientInterface;
+use Shrikeh\PagerDuty\Client;
 
-class Guzzle
+class Guzzle implements Client
 {
     private $client;
 
@@ -13,7 +14,7 @@ class Guzzle
         $this->client = $client;
     }
 
-    public function request($method, $action, $options = [])
+    public function request($method, $action, array $options = [])
     {
         return $this->client->request($method, $action, $options);
     }

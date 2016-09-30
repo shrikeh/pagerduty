@@ -16,11 +16,11 @@ class GuzzleSpec extends ObjectBehavior
     )
     {
         $con->offsetSet(
-            ClientServiceProvider::PROVIDER_CLIENT_KEY,
+            ClientServiceProvider::PROVIDER_CLIENT,
             Argument::type('Closure')
         )->shouldBeCalled();
         $con->offsetSet(
-            GuzzleProvider::PROVIDER_GUZZLE_CLIENT,
+            GuzzleProvider::PROVIDER_CLIENT_GUZZLE,
             Argument::type('Closure')
         )->shouldBeCalled();
         $this->register($con);

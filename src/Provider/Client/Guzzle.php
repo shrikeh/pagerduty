@@ -8,20 +8,19 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 use Shrikeh\PagerDuty\Client\Guzzle as Client;
-use Shrikeh\PagerDuty\Provider\Auth;
 use Shrikeh\PagerDuty\Provider\Client as ClientServiceProvider;
 use Shrikeh\PagerDuty\Provider\Http;
 
 final class Guzzle implements ServiceProviderInterface, ClientServiceProvider
 {
-    const PROVIDER_GUZZLE_CLIENT = 'pagerduty.client.guzzle';
+    const PROVIDER_CLIENT_GUZZLE = 'pagerduty.client.guzzle';
 
     public function register(Container $container)
     {
         $container = $this->guzzle($container);
 
-        $container[static::PROVIDER_CLIENT_KEY] = function(Container $c) {
-            return new Client($c[static::PROVIDER_GUZZLE_CLIENT]);
+        $container[static::PROVIDER_CLIENT] = function(Container $c) {
+            return new Client($c[static::PROVIDER_CLIENT_GUZZLE]);
         };
 
         return $container;
@@ -29,14 +28,11 @@ final class Guzzle implements ServiceProviderInterface, ClientServiceProvider
 
     private function guzzle(Container $container)
     {
-        $container[static::PROVIDER_GUZZLE_CLIENT] = function(Container $c) {
+        $container[static::PROVIDER_CLIENT_GUZZLE] = function(Container $c) {
             return new GuzzleClient([
-              'base_uri' => $c[Http::PROVIDER_HTTP_DOMAIN],
+              'base_uri' => $c[Http::PROVIDER_HTTP_BASE_URI],
               'timeout' => $c[Http::PROVIDER_HTTP_TIMEOUT],
-              'headers' => [
-                'Accept:' =>  'application/vnd.pagerduty+json;version=2',
-                'Authorization' => sprintf('Token token=%s', $c[Auth::PROVIDER_AUTH_TOKEN])
-              ]
+              'headers' => $c[Http::PROVIDER_HTTP_HEADERS],
             ]);
         };
         return $container;

@@ -7,7 +7,7 @@ use Shrikeh\PagerDuty\Parser;
 use Shrikeh\PagerDuty\Repository\OnCalls;
 use Shrikeh\PagerDuty\Parser\OnCall as OnCallParser;
 
-class OnCallRepository implements OnCalls
+class OnCallsRepository implements OnCalls
 {
     private $client;
 

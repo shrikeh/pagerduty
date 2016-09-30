@@ -2,9 +2,14 @@
 
 namespace Shrikeh\PagerDuty\Parser\OnCall;
 
+use Psr\Http\Message\ResponseInterface;
+
+use Shrikeh\PagerDuty\EscalationPolicy\OnCall as EscalationPolicy;
+use Shrikeh\PagerDuty\Collection\EscalationPolicyCollection;
 use Shrikeh\PagerDuty\Decoder\Json;
 use Shrikeh\PagerDuty\Parser\OnCall;
-use Psr\Http\Message\ResponseInterface;
+
+
 
 final class OnCallParser implements OnCall
 {
@@ -17,8 +22,13 @@ final class OnCallParser implements OnCall
 
     public function parseResponse(ResponseInterface $response)
     {
-        return new EscalationPolicyCollection(
-            $this->decoder->decode($response->getBody())
-      );
+        $dto = $this->decoder->decode($response->getBody());
+        $policies = [];
+        foreach ($dto->oncalls as $entry) {
+            foreach ($entry->escalation_policy as $scalationPolicy) {
+                $policies[] = new EscalationPolicy();
+            }
+        }
+        return new EscalationPolicyCollection($policies);
     }
 }

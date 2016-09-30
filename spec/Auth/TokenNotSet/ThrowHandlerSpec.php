@@ -3,9 +3,7 @@
 namespace spec\Shrikeh\PagerDuty\Auth\TokenNotSet;
 
 use Pimple\Container;
-
 use Shrikeh\PagerDuty\Auth\TokenNotSetException;
-use Shrikeh\PagerDuty\Auth\TokenNotSet\ThrowHandler;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

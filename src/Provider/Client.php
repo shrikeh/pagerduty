@@ -3,5 +3,5 @@ namespace Shrikeh\PagerDuty\Provider;
 
 interface Client
 {
-    const PROVIDER_CLIENT_KEY = 'pagerduty.client';
+    const PROVIDER_CLIENT = 'pagerduty.client';
 }

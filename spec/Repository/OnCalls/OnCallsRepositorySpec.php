@@ -4,7 +4,7 @@ namespace spec\Shrikeh\PagerDuty\Repository\OnCalls;
 
 use Shrikeh\PagerDuty\Client;
 use Shrikeh\PagerDuty\Parser;
-use Shrikeh\PagerDuty\Repository\OnCalls\OnCallRepository;
+use Shrikeh\PagerDuty\Repository\OnCalls\OnCallsRepository;
 use Shrikeh\PagerDuty\Collection\EscalationPolicyCollection;
 use Shrikeh\PagerDuty\Parser\OnCall as OnCallParser;
 use Psr\Http\Message\ResponseInterface;
@@ -26,7 +26,7 @@ class OnCallRepositorySpec extends ObjectBehavior
         $parser
     ) {
         $string = 'some json';
-        $client->request('GET', OnCallRepository::ENDPOINT)->willReturn($response);
+        $client->request('GET', OnCallsRepository::ENDPOINT)->willReturn($response);
         $parser->parseResponse($response)->willReturn($collection);
         $this->get()->shouldReturn($collection);
     }
