@@ -3,7 +3,7 @@
 namespace Shrikeh\PagerDuty\Collection;
 
 use IteratorIterator;
-use OutOfBoundsException;
+use SplObjectStorage;
 use Shrikeh\PagerDuty\Collection;
 use Shrikeh\PagerDuty\Entity\OnCall;
 
@@ -13,7 +13,7 @@ final class OnCalls extends IteratorIterator implements Collection
 
     public function __construct($onCalls)
     {
-        parent::__construct(new \SplObjectStorage());
+        parent::__construct(new SplObjectStorage());
 
         foreach ($onCalls as $oncall) {
             $this->appendOnCall($oncall);
@@ -26,14 +26,15 @@ final class OnCalls extends IteratorIterator implements Collection
         $this->getInnerIterator()->attach($oncall);
     }
 
-    public function seek($level)
+    public function filteredByLevel($level)
     {
+        $oncalls = [];
+
         foreach ($this->getInnerIterator() as $oncall) {
             if ($oncall->level() === $level) {
-                return $oncall;
+                $oncalls[] = $oncall;
             }
         }
-        $msg = 'No on call results match level %d';
-        throw new OutOfBoundsException(sprintf($msg, $level));
+        return new static($oncalls);
     }
 }

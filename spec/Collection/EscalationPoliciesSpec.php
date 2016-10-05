@@ -18,17 +18,6 @@ class EscalationPoliciesSpec extends ObjectBehavior
         $this->beConstructedWith([$policy1, $policy2, $policy3]);
     }
 
-    // function it_allows_iterating_over_escalation_policies(
-    //     $policy1,
-    //     $policy2
-    // ) {
-    //     $this->current()->shouldReturn($policy1);
-    //     $this->next();
-    //     $this->current()->shouldReturn($policy2);
-    //     $this->rewind();
-    //     $this->current()->shouldReturn($policy1);
-    // }
-
     function it_throws_an_exception_if_you_try_to_set_a_policy(
         $policy1
     ) {

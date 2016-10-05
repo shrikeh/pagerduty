@@ -15,7 +15,7 @@ final class OnCalls implements OnCallsProvider, ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $container[OnCallsProvider::PROVIDER_REPOSITORY_ONCALLS] = function(Container $c) {
+        $container[static::PROVIDER_REPOSITORY_ONCALLS] = function(Container $c) {
             return new OnCallsRepository(
                 $c[Client::PROVIDER_CLIENT],
                 new OnCallParser($c[Decoder::PROVIDER_DECODER])

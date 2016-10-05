@@ -28,4 +28,13 @@ class OnCallsRepository implements OnCalls
             static::ENDPOINT
         ));
     }
+
+    public function users()
+    {
+      return $this->parser->parseResponse($this->client->request(
+          'GET',
+          static::ENDPOINT,
+          ['query' => 'include[]=users']
+      ));
+    }
 }

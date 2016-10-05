@@ -9,7 +9,16 @@ use Prophecy\Argument;
 
 class OnCallsSpec extends ObjectBehavior
 {
-    function let(
+    // public function getMatchers()
+    // {
+    //   return [
+    //       'haveEntry(' => function (OnCalls $subject, OnCall $key) {
+    //           return $subject->getInnerIterator()->offsetExists($key);
+    //       }
+    //   ];
+    // }
+
+    public function let(
         OnCall $entry1,
         OnCall $entry2,
         OnCall $entry3
@@ -20,20 +29,14 @@ class OnCallsSpec extends ObjectBehavior
         $this->beConstructedWith([$entry1, $entry2, $entry3]);
     }
 
-    function it_is_seekable(
+    function it_returns_a_new_collection_when_filtered_by_level(
         $entry1,
         $entry2,
         $entry3
     ) {
-        $this->seek(2)->shouldReturn($entry2);
-    }
-
-    function it_throws_an_exception_if_you_seek_a_level_it_doesnt_have(
-        $entry1,
-        $entry2,
-        $entry3
-    ) {
-        $this->shouldThrow('\OutOfBoundsException')->duringSeek(4);
+        $this->filteredByLevel($entry2->level())->shouldBeAnInstanceOf(
+            'Shrikeh\PagerDuty\Collection\OnCalls'
+        );
     }
 
     function it_throws_an_exception_if_you_try_to_set_an_oncall(
